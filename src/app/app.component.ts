@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SearchService } from './search.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  destination: string = '';
+  cities: string[] = [];
+
+  constructor(private searchService: SearchService) { }
+
+  updateDestination() {
+    this.cities = [];
+    this.searchService.getCity()
+      .subscribe(response => {
+        Object.values(response).forEach((city) => {
+          this.cities.push(city);
+        });
+      });
+  }
 }
